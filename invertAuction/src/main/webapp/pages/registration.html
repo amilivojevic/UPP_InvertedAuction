@@ -1,0 +1,185 @@
+<div class="row">
+
+    <div class="col-sm-6" >
+        <form class="form-horizontal">
+            <fieldset>
+
+                <!-- Form Name -->
+                <h2 align="center">Registration</h2>
+
+                <!-- Multiple Radios -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Type of user</label>
+                    <div class="col-md-6">
+                        <div class="radio">
+                            <label for="radios-0">
+                                <input type="radio" name="radios" id="radios-0" value="individual" checked="checked" ng-model="userType">
+                                Individual
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label for="radios-1">
+                                <input type="radio" name="radios" id="radios-1" value="company" ng-model="userType">
+                                Company
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="name_input">Name</label>
+                    <div class="col-md-6">
+                        <input id="name_input" name="name_input" type="text" class="form-control input-md">
+                        <span class="help-block">Enter your name</span>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="email_input">Email</label>
+                    <div class="col-md-6">
+                        <input id="email_input" name="email_input" type="text" class="form-control input-md">
+                        <span class="help-block">Enter your email</span>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="username_input">Username</label>
+                    <div class="col-md-6">
+                        <input id="username_input" name="username_input" type="text" class="form-control input-md">
+                        <span class="help-block">Enter username</span>
+                    </div>
+                </div>
+
+                <!-- Password input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="passwordinput">Password</label>
+                    <div class="col-md-6">
+                        <input id="passwordinput" name="passwordinput" type="password" class="form-control input-md">
+                        <span class="help-block">Enter password</span>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="address_input">Address</label>
+                    <div class="col-md-6">
+                        <input id="address_input" name="address_input" type="text" class="form-control input-md">
+                        <span class="help-block">Enter your address</span>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="city_input">City</label>
+                    <div class="col-md-6">
+                        <input id="city_input" name="city_input" type="text" class="form-control input-md">
+                        <span class="help-block">Enter your city</span>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="zip_input">Text Input</label>
+                    <div class="col-md-6">
+                        <input id="zip_input" name="zip_input" type="text" class="form-control input-md">
+                        <span class="help-block">Enter zip</span>
+                    </div>
+                </div>
+
+
+            </fieldset>
+        </form>
+
+    </div>
+
+    <div class="col-sm-4 well" ng-show="userType === 'company'">
+        <form class="form-horizontal">
+            <fieldset>
+
+                <!-- Form Name -->
+                <h2 align="center">Register company agent</h2>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="name_input">Name</label>
+                    <div class="col-md-6">
+                        <input id="name_input" name="name_input" type="text" class="form-control input-md">
+                        <span class="help-block">Enter your name</span>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="email_input">Email</label>
+                    <div class="col-md-6">
+                        <input id="email_input" name="email_input" type="text" class="form-control input-md">
+                        <span class="help-block">Enter your email</span>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="username_input">Username</label>
+                    <div class="col-md-6">
+                        <input id="username_input" name="username_input" type="text" class="form-control input-md">
+                        <span class="help-block">Enter username</span>
+                    </div>
+                </div>
+
+                <!-- Password input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="passwordinput">Password</label>
+                    <div class="col-md-6">
+                        <input id="passwordinput" name="passwordinput" type="password" class="form-control input-md">
+                        <span class="help-block">Enter password</span>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="address_input">Address</label>
+                    <div class="col-md-6">
+                        <input id="address_input" name="address_input" type="text" class="form-control input-md">
+                        <span class="help-block">Enter your address</span>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="city_input">City</label>
+                    <div class="col-md-6">
+                        <input id="city_input" name="city_input" type="text" class="form-control input-md">
+                        <span class="help-block">Enter your city</span>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="zip_input">Text Input</label>
+                    <div class="col-md-6">
+                        <input id="zip_input" name="zip_input" type="text" class="form-control input-md">
+                        <span class="help-block">Enter zip</span>
+                    </div>
+                </div>
+
+
+            </fieldset>
+        </form>
+
+    </div>
+
+
+
+</div>
+
+
+
+<!-- Button -->
+<div class="row " >
+    <div class="col-md-6 text-center">
+        <button id="singlebutton" name="singlebutton" class="btn btn-primary">Submit registration</button>
+    </div>
+</div>
