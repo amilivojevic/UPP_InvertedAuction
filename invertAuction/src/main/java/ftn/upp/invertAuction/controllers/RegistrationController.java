@@ -58,7 +58,6 @@ public class RegistrationController {
         //List<org.activiti.engine.form.FormProperty> formProperties = startFormData.getFormProperties();
 
         ProcessDefinition procDef = repositoryService.createProcessDefinitionQuery().processDefinitionKey("registrationProcess").latestVersion().singleResult();
-        //takodje bi sada ovde trebala biti uradjena validacija
         formService.submitStartFormData(procDef.getId(),params);
         //runtimeService.startProcessInstanceByKey("registrationProcess");
 
@@ -78,7 +77,7 @@ public class RegistrationController {
 
         String taskId = getLastTaskByAssignee(username).getId();
 
-        //formService.submitTaskFormData(taskId,params);
+        formService.submitTaskFormData(taskId,params);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }

@@ -14,6 +14,14 @@ invertAuctionApp.config(function($routeProvider) {
             templateUrl : '/pages/registration.html',
             controller  : 'registrationController'
         })
+        .when('/login', {
+            templateUrl : '/pages/login.html',
+            controller  : 'loginController'
+        })
+        .when('/logout', {
+            templateUrl : '/pages/logout.html',
+            controller  : 'logoutController'
+        })
         .otherwise({
             redirectTo: '/'
         });
