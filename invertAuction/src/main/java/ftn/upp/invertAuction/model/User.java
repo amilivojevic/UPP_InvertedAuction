@@ -11,16 +11,72 @@ public class User {
     private String username;
     @Column
     private String password;
+    @Column
+    private String name;
+    @Column
+    private String email;
+    @Column
+    private String address;
     @ManyToOne
     private Authority authority;
 
-    public User(String username, String password, Authority authority) {
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", authority=" + authority +
+                '}';
+    }
+
+    public User(String username, String password, String name, String email, String address, Authority authority) {
         this.username = username;
         this.password = password;
+        this.name = name;
+        this.email = email;
+        this.address = address;
         this.authority = authority;
     }
 
     public User() {
+    }
+
+    public User(User user){
+        this.id = user.getId();
+        this.address = user.getAddress();
+        this.authority = user.getAuthority();
+        this.email = user.getEmail();
+        this.name = user.getName();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Authority getAuthority() {

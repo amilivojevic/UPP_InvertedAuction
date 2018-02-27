@@ -90,8 +90,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 			.authorizeRequests()
-				.antMatchers("/api/proba").hasAuthority("USER")
+				.antMatchers("/api/proba").hasAuthority("AGENT")
 				.antMatchers("/api/login").permitAll()
+				.antMatchers("/api/users/data").permitAll()
+				.antMatchers("/api/**").authenticated()
 				.and().csrf().disable();
 
 		httpSecurity.addFilterBefore(authenticationTokenFilterBean(),

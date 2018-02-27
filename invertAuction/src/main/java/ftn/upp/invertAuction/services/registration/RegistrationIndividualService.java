@@ -1,4 +1,4 @@
-package ftn.upp.invertAuction.services;
+package ftn.upp.invertAuction.services.registration;
 
 import org.springframework.stereotype.Component;
 

@@ -14,10 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -68,5 +65,12 @@ public class UserController {
             return new ResponseEntity<>("Invalid login",
                     HttpStatus.NOT_FOUND);
         }
+    }
+
+    @RequestMapping(value = "/users/data", method = RequestMethod.GET)
+    public ResponseEntity<User> getData(@RequestHeader("X-Auth-Token") String token)
+    {
+        User user = userService.findByToken(token);
+        return new ResponseEntity<>(new User(user), HttpStatus.OK);
     }
 }

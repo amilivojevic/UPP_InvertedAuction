@@ -1,6 +1,6 @@
 package ftn.upp.invertAuction.services;
 
-import ftn.upp.invertAuction.Repositories.UserRepository;
+import ftn.upp.invertAuction.repositories.UserRepository;
 import ftn.upp.invertAuction.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

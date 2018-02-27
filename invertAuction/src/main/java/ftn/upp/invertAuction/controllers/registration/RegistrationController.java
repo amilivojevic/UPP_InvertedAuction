@@ -1,4 +1,4 @@
-package ftn.upp.invertAuction.controllers;
+package ftn.upp.invertAuction.controllers.registration;
 
 import ftn.upp.invertAuction.dto.NewAgentDTO;
 import ftn.upp.invertAuction.dto.NewUserDTO;
@@ -46,7 +46,7 @@ public class RegistrationController {
 
     @RequestMapping(value = "/start-process", method = RequestMethod.POST)
     public String startNewInstance(@RequestBody NewUserDTO newUserDTO) {
-        System.out.println("START NEW INSTANCE: ");
+        System.out.println("Starting new process instance (registration)... ");
         Map<String, String> params = new HashMap<>();
 
         params.put("name", newUserDTO.getName());
