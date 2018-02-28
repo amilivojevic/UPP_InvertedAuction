@@ -17,11 +17,10 @@
 
                             <!-- Select Basic -->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="selectbasic">Job category</label>
+                                <label class="col-md-4 control-label" >Job category</label>
                                 <div class="col-md-6">
-                                    <select id="selectbasic" name="selectbasic" class="form-control" ng-model="job_category">
-                                        <option ng-repeat="cat in jobCategories" >{{cat.name}}</option>
-                                    </select>
+                                    <select ng-options="item.name for item in jobCategories" ng-model="job_category"/>
+
                                 </div>
                             </div>
 

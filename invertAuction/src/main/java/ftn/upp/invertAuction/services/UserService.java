@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -29,5 +31,9 @@ public class UserService {
         User user = findByUsername(details.getUsername());
 
         return user;
+    }
+
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
 }

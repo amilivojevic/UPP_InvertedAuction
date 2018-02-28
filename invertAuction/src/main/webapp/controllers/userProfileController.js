@@ -10,8 +10,10 @@ invertAuctionApp.controller('userProfileController', function($scope, $http,$win
     });
     
     $scope.startNewIA = function () {
+
+        var index = $scope.jobCategories.indexOf($scope.job_category) + 1;
         var newProcProcesProps={
-            'job_category' : $scope.job_category,
+            'job_category' : index,
             'job_description' : $scope.job_description,
             'job_max_price' : $scope.job_max_price,
             'job_application_deadline' : $scope.job_application_deadline,
@@ -20,7 +22,11 @@ invertAuctionApp.controller('userProfileController', function($scope, $http,$win
         }
 
         console.log("new proces props: " + JSON.stringify(newProcProcesProps));
-        $http.post("/api/")
+        $http.post("/api/start-ia",newProcProcesProps).then(function () {
+           console.log("start-ia successfull");
+        }, function () {
+            console.log("start-ia failed");
+        });
     }
 
 });
