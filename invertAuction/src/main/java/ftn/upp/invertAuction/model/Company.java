@@ -23,6 +23,19 @@ public class Company {
     @ManyToOne
     private User agent;
 
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", distance=" + distance +
+                ", jobCategories=" + jobCategories +
+                ", agent=" + agent +
+                '}';
+    }
+
     public Company(String name, String email, String address, float distance, List<JobCategory> jobCategories, User agent) {
         this.name = name;
         this.email = email;

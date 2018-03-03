@@ -28,27 +28,40 @@ public class CandidateCompaniesService {
 
     public void createList(DelegateExecution execution){
 
-        System.out.println("Creating candidate list...");
+        System.out.println("\t\t\tCreating candidate list...");
         String procInstId = execution.getProcessInstanceId();
 
         //runtimeService.setVariable(procInstId,"client", "agent1");
 
         String clientUsername = runtimeService.getVariable(procInstId,"client", String.class);
         User client = userService.findByUsername(clientUsername);
+        // does client have a company?
+        Company company = userService.hasCompany(client);
 
         // all the companies suitable to job_category
         long jobId = runtimeService.getVariable(procInstId,"job_category", Long.class);
         List<Company> companies = companyService.findAllByJobCategory(jobId);
 
+
         List<Company> finalCompanies = new ArrayList<Company>();
         for(Company c : companies){
-
+            if(company != null){
+                if(company.getId() == c.getId()){
+                    // this is the client's company
+                    // take another company
+                    continue;
+                }
+            }
             if (companyService.checkIfCompanyCloseEnough(c,client)){
                 finalCompanies.add(c);
-                //System.out.println("KANDIDAT: " + c.getName());
+                System.out.println("\t\t\t CANDIDATE: " + c.toString());
             }
         }
 
         runtimeService.setVariable(procInstId,"candidateList", finalCompanies);
+    }
+
+    public void notifyCandidates(){
+        System.out.println("\t\t\tNotification for candidates...");
     }
 }

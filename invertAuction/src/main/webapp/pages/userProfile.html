@@ -12,7 +12,7 @@
                     <h4 class="modal-title">New Invert Auction properties</h4>
                 </div>
                 <div class="modal-body">
-                    <ng-form class="form-horizontal" name="loginForm">
+                    <ng-form class="form-horizontal" name="newInstance">
                         <fieldset>
 
                             <!-- Select Basic -->
@@ -75,7 +75,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" ng-disabled="loginForm.$invalid" ng-click="startNewIA()">Submit</button>
+                    <button type="button" class="btn btn-primary" ng-disabled="newInstance.$invalid" ng-click="startNewIA()">Submit</button>
                 </div>
             </div>
 
@@ -83,20 +83,59 @@
     </div>
 </div>
 &nbsp;
-<div class="col-md-12">
+<div class="row">
+<div class="col-md-3">
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#inbox">Inbox</a></li>
-        <li><a data-toggle="tab" data-target="#myIA">My Invert Auctions</a></li>
+        <li class="active"><a data-toggle="tab" data-target="#inbox">Inbox</a></li>
+        <li>               <a data-toggle="tab" data-target="#myIA">My Invert Auctions</a></li>
     </ul>
 
     <div class="tab-content">
         <div id="inbox" class="tab-pane fade in active">
-            <h3>HOME</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+            <div class="list-group">
+                <button type="button"  ng-click="openUserTask($index)" ng-repeat="task in userTasks track by $index" class="list-group-item list-group-item-action">
+                    <b>{{task.name}}</b>
+                    <p >{{task.id}}</p>
+                </button >
+            </div>
+
         </div>
         <div id="myIA" class="tab-pane fade">
             <h3>Menu 1</h3>
             <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
         </div>
     </div>
+</div>
+
+<div class="col-md-6">
+
+    <div class="panel panel-default" ng-hide="index == -1">
+        <div class="panel-heading">
+            {{userTasks[index].name}}
+        </div>
+
+        <div class="panel-body">
+            <ng-form name="setTaskProps">
+                <div ng-repeat="prop in props track by $index">
+                    {{prop.name}}
+                    &nbsp;
+                    <div ng-show="prop.type.name == 'boolean'">
+                        <label><input type="radio" ng-model="propVals[$index].value" ng-value="true" name="optradio" >Yes</label>
+                        <label><input type="radio" ng-model="propVals[$index].value" ng-value="false" name="optradio">No</label>
+                    </div>
+                    <div ng-show="prop.type.name == 'string'" >
+                        <input name="textinput"  type="text" class="form-control input-md" ng-required="prop.type.name == 'string'">
+                    </div>
+                    <div ng-show="prop.type.name == 'long'" >
+                        <input name="textinput" type="text" class="form-control input-md" ng-required="prop.type.name == 'long'">
+                    </div>
+
+                </div>
+
+                <button type="button" ng-disabled="setTaskProps.$invalid" class="btn btn-primary pull-right" ng-click="submitTaskProps()">Submit</button>
+            </ng-form>
+        </div>
+    </div>
+</div>
 </div>

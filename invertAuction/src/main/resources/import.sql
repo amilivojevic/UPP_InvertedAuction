@@ -10,17 +10,17 @@ INSERT INTO `job_category` (name) VALUES ('selling');
 
 --password: admin
 --usernmae: agent1
-INSERT INTO `user`(`password`,`username`,`authority_id`,`name`,`email`,`address`)VALUES("$2a$10$2nUwyYdXRxhKio6aVrwsVOXlUqSs9XnsIndPiyT.3AphhvZ/UYBta","agent1",2,"marko markovic","marko@gmail.com","markova adresa");
+INSERT INTO `user`(`password`,`username`,`authority_id`,`name`,`email`,`address`)VALUES("$2a$10$2nUwyYdXRxhKio6aVrwsVOXlUqSs9XnsIndPiyT.3AphhvZ/UYBta","agent1",2,"marko markovic","inverttauctionnagent@gmail.com","markova adresa");
 --password: admin
 --usernmae: agent2
-INSERT INTO `user`(`password`,`username`,`authority_id`,`name`,`email`,`address`)VALUES("$2a$10$2nUwyYdXRxhKio6aVrwsVOXlUqSs9XnsIndPiyT.3AphhvZ/UYBta","agent2",2,"pera peric","pera@Gmail.com","perina adresa");
+INSERT INTO `user`(`password`,`username`,`authority_id`,`name`,`email`,`address`)VALUES("$2a$10$2nUwyYdXRxhKio6aVrwsVOXlUqSs9XnsIndPiyT.3AphhvZ/UYBta","agent2",2,"pera peric","inverttauctionnagent@Gmail.com","perina adresa");
 --password: admin
 --usernmae: agent3
-INSERT INTO `user`(`password`,`username`,`authority_id`,`name`,`email`,`address`)VALUES("$2a$10$2nUwyYdXRxhKio6aVrwsVOXlUqSs9XnsIndPiyT.3AphhvZ/UYBta","agent3",2,"zoran zoranovic","zoki@gmail.com","zokijeva adresa");
+INSERT INTO `user`(`password`,`username`,`authority_id`,`name`,`email`,`address`)VALUES("$2a$10$2nUwyYdXRxhKio6aVrwsVOXlUqSs9XnsIndPiyT.3AphhvZ/UYBta","agent3",2,"zoran zoranovic","inverttauctionnagent@gmail.com","zokijeva adresa");
 
 --password: admin
 --usernmae: indi
-INSERT INTO `user`(`password`,`username`,`authority_id`,`name`,`email`,`address`)VALUES("$2a$10$2nUwyYdXRxhKio6aVrwsVOXlUqSs9XnsIndPiyT.3AphhvZ/UYBta","indi",1,"Maja Majic","maja@gmail.com","Majina adresa");
+INSERT INTO `user`(`password`,`username`,`authority_id`,`name`,`email`,`address`)VALUES("$2a$10$2nUwyYdXRxhKio6aVrwsVOXlUqSs9XnsIndPiyT.3AphhvZ/UYBta","indi",1,"Maja Majic","inverttauctionnindvidual@gmail.com","Majina adresa");
 
 
 --comp1
@@ -37,7 +37,7 @@ INSERT INTO `company` (`id`, `address`, `distance`, `email`, `name`, `agent_id`)
 INSERT INTO `company_job_categories` (`company_id`, `job_categories_id`) VALUES ('2', '1');
 
 --driving
-INSERT INTO `company_job_categories` (`company_id`, `job_categories_id`) VALUES ('2', '3');
+--INSERT INTO `company_job_categories` (`company_id`, `job_categories_id`) VALUES ('2', '3');
 
 
 --comp3

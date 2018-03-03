@@ -1,5 +1,7 @@
 package ftn.upp.invertAuction.services;
 
+import ftn.upp.invertAuction.model.Company;
+import ftn.upp.invertAuction.repositories.CompanyRepository;
 import ftn.upp.invertAuction.repositories.UserRepository;
 import ftn.upp.invertAuction.model.User;
 import ftn.upp.invertAuction.security.TokenUtils;
@@ -21,6 +23,9 @@ public class UserService {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    CompanyRepository companyRepository;
+
     public User findByUsername(String username){
         return userRepository.findByUsername(username);
     }
@@ -35,5 +40,17 @@ public class UserService {
 
     public List<User> findAll(){
         return userRepository.findAll();
+    }
+
+    public Company hasCompany(User client){
+        List<Company> companies = companyRepository.findAll();
+        for (Company c : companies){
+            if (c.getAgent().getId() == client.getId()){
+                //client is agent of company c
+                return c;
+            }
+        }
+        // clinet isnt agent of any company
+        return null;
     }
 }

@@ -24,7 +24,6 @@ public class CompanyService {
 
         List<Company> companies = findAll();
         List<Company> companiesByJob = new ArrayList<>();
-
         for (Company c : companies){
             for (JobCategory j : c.getJobCategories()){
                 if (j.getId() == jobCategoryId){
