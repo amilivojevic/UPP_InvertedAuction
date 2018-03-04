@@ -24,7 +24,7 @@ invertAuctionApp.controller('loginController', function($scope, $http,$window,$l
                     $scope.loggedUser = loggedUser;
                     var user = angular.fromJson($window.localStorage['loggedUser']);
 
-                    $window.location = "#!/main";
+                    $window.location = "#/userProfile";
                 }
             );
 
@@ -53,7 +53,7 @@ invertAuctionApp.controller('loginController', function($scope, $http,$window,$l
             $window.localStorage.setItem("token",t);
             console.log("token = " + $window.localStorage.getItem("token"));
             console.log("role = " + role);
-
+            checkIfLogged();
 
         }, function () {
             alert(response.data.response);

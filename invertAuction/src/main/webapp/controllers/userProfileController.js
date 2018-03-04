@@ -8,6 +8,10 @@ invertAuctionApp.controller('userProfileController', function($scope, $http,$win
         $scope.jobCategories = response.data;
         $scope.userTasks = [];
 
+        $scope.loggedUser = angular.fromJson($window.localStorage['loggedUser']);
+        console.log("vm.userData = " + JSON.stringify($scope.loggedUser.id));
+
+
         //HARDKODOVAN AGENT1!!!
         $http.get("/api/activiti/getUserTasks/agent1").then(function (tasks) {
             console.log("TASKS: " + JSON.stringify(tasks.data));
@@ -21,6 +25,13 @@ invertAuctionApp.controller('userProfileController', function($scope, $http,$win
     },function () {
         console.log("Failed to retrieve job categoories");
     });
+
+    $scope.logout = function() {
+        console.log("usao u logout");
+        $window.localStorage.removeItem("token");
+        $window.localStorage.removeItem("loggedUser");
+        $location.path('#/login');
+    }
     
     $scope.startNewIA = function () {
 
