@@ -9,7 +9,7 @@
         <activiti:formProperty id="job_application_deadline" required="true"></activiti:formProperty>
         <activiti:formProperty id="job_min_candidates" type="long" required="true"></activiti:formProperty>
         <activiti:formProperty id="job_deadline" required="true"></activiti:formProperty>
-        <activiti:formProperty id="job_min_candidates" type="long"></activiti:formProperty>
+        <activiti:formProperty id="job_max_candidates" type="long"></activiti:formProperty>
       </extensionElements>
     </startEvent>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="servicetask1"></sequenceFlow>
@@ -47,7 +47,7 @@
       <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="candidateList" activiti:elementVariable="candidate"></multiInstanceLoopCharacteristics>
       <startEvent id="startevent2" name="Start"></startEvent>
       <sequenceFlow id="flow20" sourceRef="startevent2" targetRef="servicetask5"></sequenceFlow>
-      <serviceTask id="servicetask5" name="Notify candidates" activiti:expression="${candidateCompaniesService.notifyCandidates()}"></serviceTask>
+      <serviceTask id="servicetask5" name="Notify candidates" activiti:expression="${candidateCompaniesService.notifyCandidates(candidate)}"></serviceTask>
       <userTask id="usertask3" name="Candidate offer confirmation" activiti:assignee="${candidate.agent.username}">
         <extensionElements>
           <activiti:formProperty id="candidateConfirmRequest" name="Do you want to confirm client's request?" type="boolean"></activiti:formProperty>
@@ -63,16 +63,16 @@
         </extensionElements>
       </userTask>
       <sequenceFlow id="flow24" name="confirmed" sourceRef="exclusivegateway5" targetRef="usertask4">
-        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${candidateConfirmRequest == "yes"}]]></conditionExpression>
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${candidateConfirmRequest == "true"}]]></conditionExpression>
       </sequenceFlow>
       <sequenceFlow id="flow25" name="not confirmed" sourceRef="exclusivegateway5" targetRef="servicetask6">
-        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${candidateConfirmRequest == "no"}]]></conditionExpression>
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${candidateConfirmRequest == "false"}]]></conditionExpression>
       </sequenceFlow>
       <serviceTask id="servicetask6" name="Save canceled offer" activiti:expression="${offerService.saveCanceledOffer(execution)}"></serviceTask>
       <endEvent id="endevent5" name="End"></endEvent>
       <sequenceFlow id="flow26" sourceRef="servicetask6" targetRef="endevent5"></sequenceFlow>
       <sequenceFlow id="flow27" sourceRef="usertask4" targetRef="servicetask7"></sequenceFlow>
-      <serviceTask id="servicetask7" name="Get list of submitted offers" activiti:expression="${offerService.getSubmittedOffers(execution)}"></serviceTask>
+      <serviceTask id="servicetask7" name="Get list of submitted offers" activiti:expression="${candidateCompaniesService.getSubmittedOffers(execution)}"></serviceTask>
       <userTask id="usertask5" name="View ranging and edit offer" activiti:assignee="${candidate.agent.username}">
         <extensionElements>
           <activiti:formProperty id="offerRank" type="long" writable="false"></activiti:formProperty>
@@ -93,7 +93,7 @@
     </subProcess>
     <sequenceFlow id="flow21" sourceRef="exclusivegateway4" targetRef="subprocess1"></sequenceFlow>
     <sequenceFlow id="flow33" sourceRef="subprocess1" targetRef="servicetask8"></sequenceFlow>
-    <serviceTask id="servicetask8" name="Analize of submitted offers" activiti:expression="${offerService.analizeSubmittedOffers(execution)}"></serviceTask>
+    <serviceTask id="servicetask8" name="Analize of submitted offers" activiti:expression="${candidateCompaniesService.analizeSubmittedOffers(execution)}"></serviceTask>
     <exclusiveGateway id="exclusivegateway7" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow34" sourceRef="servicetask8" targetRef="exclusivegateway7"></sequenceFlow>
     <boundaryEvent id="boundarytimer1" name="Timer" attachedToRef="subprocess1" cancelActivity="true">
@@ -105,7 +105,7 @@
     <sequenceFlow id="flow36" name="all candidates made offer" sourceRef="exclusivegateway7" targetRef="servicetask9">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${offerList.size() == candidateList.size()}]]></conditionExpression>
     </sequenceFlow>
-    <serviceTask id="servicetask9" name="Rang Offers" activiti:expression="${offerService.rangOffers(execution)}"></serviceTask>
+    <serviceTask id="servicetask9" name="Rang Offers" activiti:expression="${candidateCompaniesService.rangOffers(execution)}"></serviceTask>
     <endEvent id="endevent7" name="End"></endEvent>
     <sequenceFlow id="flow37" sourceRef="servicetask9" targetRef="endevent7"></sequenceFlow>
     <sequenceFlow id="flow38" name="less offers" sourceRef="exclusivegateway7" targetRef="servicetask10">

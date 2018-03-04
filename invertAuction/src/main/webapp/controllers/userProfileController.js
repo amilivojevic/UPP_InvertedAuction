@@ -13,7 +13,7 @@ invertAuctionApp.controller('userProfileController', function($scope, $http,$win
 
 
         //HARDKODOVAN AGENT1!!!
-        $http.get("/api/activiti/getUserTasks/agent1").then(function (tasks) {
+        $http.get("/api/activiti/getUserTasks/" + $scope.loggedUser.username).then(function (tasks) {
             console.log("TASKS: " + JSON.stringify(tasks.data));
             $scope.userTasks = tasks.data;
             //console.log("$scope.usertasks = " + JSON.stringify($scope.userTasks));
@@ -103,8 +103,19 @@ invertAuctionApp.controller('userProfileController', function($scope, $http,$win
                     $window.location.reload();
                 },function () {
                     console.log("notEnoughCandidatesConfirmation failed");
-                })
+                });
+                break;
             }
+            case "Candidate offer confirmation":{
+                $http.post("/api/candidate/" + taskId + "/candidate-offer-confirmation", map).then(function () {
+                    console.log("offerConfirmation successful!");
+                    $window.location.reload();
+                },function () {
+                    console.log("offerConfirmation failed");
+                });
+                break;
+            }
+
 
         }
 

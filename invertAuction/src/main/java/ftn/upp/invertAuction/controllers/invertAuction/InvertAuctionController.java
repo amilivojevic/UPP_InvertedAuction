@@ -48,7 +48,6 @@ public class InvertAuctionController {
         params.put("job_min_candidates", startIADTO.getJob_min_candidates());
         params.put("job_max_candidates", startIADTO.getJob_max_candidates());
         params.put("job_deadline", startIADTO.getJob_deadline());
-        //params.put("client", );
 
         ProcessDefinition procDef = repositoryService.createProcessDefinitionQuery().processDefinitionKey("invertAuction").latestVersion().singleResult();
         identityService.setAuthenticatedUserId(user.getUsername());

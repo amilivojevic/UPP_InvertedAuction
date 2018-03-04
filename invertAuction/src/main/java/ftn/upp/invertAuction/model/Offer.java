@@ -2,10 +2,8 @@ package ftn.upp.invertAuction.model;
 
 import com.sun.istack.internal.Nullable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 @Entity
 public class Offer {
 
@@ -22,13 +20,37 @@ public class Offer {
     @Column(nullable = true)
     private double offerDeadline;
 
-    public Offer(boolean cancelled, double offerPrice, double offerDeadline) {
+    @ManyToOne
+    private User offeror;
+
+    @ManyToOne
+    private Request request;
+
+    public Offer(boolean cancelled, double offerPrice, double offerDeadline, User offeror, Request request) {
         this.cancelled = cancelled;
         this.offerPrice = offerPrice;
         this.offerDeadline = offerDeadline;
+        this.offeror = offeror;
+        this.request = request;
     }
 
     public Offer() {
+    }
+
+    public Request getRequest() {
+        return request;
+    }
+
+    public void setRequest(Request request) {
+        this.request = request;
+    }
+
+    public User getOfferor() {
+        return offeror;
+    }
+
+    public void setOfferor(User offeror) {
+        this.offeror = offeror;
     }
 
     public Long getId() {

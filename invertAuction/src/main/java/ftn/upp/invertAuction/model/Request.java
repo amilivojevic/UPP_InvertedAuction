@@ -10,13 +10,16 @@ public class Request {
     private Long id;
 
     @ManyToOne
-    private Company company;
+    private User client;
 
     @ManyToOne
     private JobCategory jobCategory;
 
     @Column
     private double maxPrice;
+
+    @Column
+    private String jobDescription;
 
     @Column
     private Date jobApplicationDeadline;
@@ -30,31 +33,47 @@ public class Request {
     @Column
     private int maxNumberOfCandidate;
 
-    public Request(Company company, JobCategory jobCategory, double maxPrice, Date jobApplicationDeadline, Date jobDeadline, int minNumberOfCandidates, int maxNumberOfCandidate) {
-        this.company = company;
+    @Column
+    private String procInstId;
+
+
+    public Request() {
+    }
+
+    public Request(User client, JobCategory jobCategory, double maxPrice, String jobDescription, Date jobApplicationDeadline, Date jobDeadline, int minNumberOfCandidates, int maxNumberOfCandidate, String procInstId) {
+        this.client = client;
         this.jobCategory = jobCategory;
         this.maxPrice = maxPrice;
+        this.jobDescription = jobDescription;
         this.jobApplicationDeadline = jobApplicationDeadline;
         this.jobDeadline = jobDeadline;
         this.minNumberOfCandidates = minNumberOfCandidates;
         this.maxNumberOfCandidate = maxNumberOfCandidate;
-
-    }
-
-    public Request() {
+        this.procInstId = procInstId;
     }
 
     @Override
     public String toString() {
         return "Request{" +
-                "companyId=" + company.getId() +
+                "id=" + id +
+                ", clientId=" + client.getId() +
                 ", jobCategoryName=" + jobCategory.getName() +
                 ", maxPrice=" + maxPrice +
+                ", jobDescription='" + jobDescription + '\'' +
                 ", jobApplicationDeadline=" + jobApplicationDeadline +
                 ", jobDeadline=" + jobDeadline +
                 ", minNumberOfCandidates=" + minNumberOfCandidates +
                 ", maxNumberOfCandidate=" + maxNumberOfCandidate +
+                ", procInstId='" + procInstId + '\'' +
                 '}';
+    }
+
+    public User getClient() {
+        return client;
+    }
+
+    public void setClient(User client) {
+        this.client = client;
     }
 
     public Long getId() {
@@ -63,14 +82,6 @@ public class Request {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
     }
 
     public JobCategory getJobCategory() {
