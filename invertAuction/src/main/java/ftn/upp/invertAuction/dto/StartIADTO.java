@@ -7,18 +7,28 @@ public class StartIADTO {
     private String job_max_price;
     private String job_application_deadline;
     private String job_min_candidates;
+    private String job_max_candidates;
     private String job_deadline;
 
-    public StartIADTO(String job_category, String job_description, String job_max_price, String job_application_deadline, String job_min_candidates, String job_deadline) {
+    public StartIADTO(String job_category, String job_description, String job_max_price, String job_application_deadline, String job_max_candidates, String job_min_candidates, String job_deadline) {
         this.job_category = job_category;
         this.job_description = job_description;
         this.job_max_price = job_max_price;
         this.job_application_deadline = job_application_deadline;
         this.job_min_candidates = job_min_candidates;
+        this.job_max_candidates = job_max_candidates;
         this.job_deadline = job_deadline;
     }
 
     public StartIADTO() {
+    }
+
+    public String getJob_max_candidates() {
+        return job_max_candidates;
+    }
+
+    public void setJob_max_candidates(String job_max_candidates) {
+        this.job_max_candidates = job_max_candidates;
     }
 
     public String getJob_category() {

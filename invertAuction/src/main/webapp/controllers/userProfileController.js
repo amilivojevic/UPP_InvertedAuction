@@ -31,10 +31,12 @@ invertAuctionApp.controller('userProfileController', function($scope, $http,$win
             'job_max_price' : $scope.job_max_price,
             'job_application_deadline' : $scope.job_application_deadline,
             'job_min_candidates' :$scope.job_min_candidates,
+            'job_max_candidates' :$scope.job_max_candidates,
             'job_deadline' : $scope.job_deadline
+
         }
 
-        console.log("new proces props: " + JSON.stringify(newProcProcesProps));
+        console.log("new process props: " + JSON.stringify(newProcProcesProps));
         $http.post("/api/start-ia",newProcProcesProps).then(function () {
            console.log("start-ia successfull");
             $window.location.reload();

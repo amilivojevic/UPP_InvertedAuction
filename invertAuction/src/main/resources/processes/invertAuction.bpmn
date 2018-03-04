@@ -9,6 +9,7 @@
         <activiti:formProperty id="job_application_deadline" required="true"></activiti:formProperty>
         <activiti:formProperty id="job_min_candidates" type="long" required="true"></activiti:formProperty>
         <activiti:formProperty id="job_deadline" required="true"></activiti:formProperty>
+        <activiti:formProperty id="job_min_candidates" type="long"></activiti:formProperty>
       </extensionElements>
     </startEvent>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="servicetask1"></sequenceFlow>

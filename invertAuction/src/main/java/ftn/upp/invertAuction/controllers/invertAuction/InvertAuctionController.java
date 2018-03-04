@@ -46,6 +46,7 @@ public class InvertAuctionController {
         params.put("job_max_price", startIADTO.getJob_max_price());
         params.put("job_application_deadline", startIADTO.getJob_application_deadline());
         params.put("job_min_candidates", startIADTO.getJob_min_candidates());
+        params.put("job_max_candidates", startIADTO.getJob_max_candidates());
         params.put("job_deadline", startIADTO.getJob_deadline());
         //params.put("client", );
 
