@@ -30,7 +30,8 @@ invertAuctionApp.controller('userProfileController', function($scope, $http,$win
         console.log("usao u logout");
         $window.localStorage.removeItem("token");
         $window.localStorage.removeItem("loggedUser");
-        $location.path('#/login');
+        //$location.path('#/login');
+        return true;
     }
     
     $scope.startNewIA = function () {

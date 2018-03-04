@@ -1,5 +1,19 @@
 <div class="col-md-12">
-    {{loggedUser.username}}
+
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Angular Routing Example</a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="#/login" ng-click="logout()"><i class="fa fa-sign-out"></i> Logout</a></li>
+                <li><a href="#/userProfile"><i class="fa fa-user"></i> {{loggedUser.username}}</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <button type="button" class="btn btn-warning"  data-toggle="modal" data-target="#newIAModal">New Invert Auction</button>
 
     <!-- Modal -->
