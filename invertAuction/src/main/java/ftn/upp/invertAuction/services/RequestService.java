@@ -42,4 +42,9 @@ public class RequestService {
         requestRepository.save(r);
         System.out.println("Request saved: " + r.toString());
     }
+
+    public Request findByProcInstId(String procInstId){
+        return requestRepository.findByProcInstId(procInstId);
+    }
+
 }

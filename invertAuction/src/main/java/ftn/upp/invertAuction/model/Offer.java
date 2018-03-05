@@ -3,6 +3,7 @@ package ftn.upp.invertAuction.model;
 import com.sun.istack.internal.Nullable;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Offer {
@@ -18,7 +19,7 @@ public class Offer {
     private double offerPrice;
 
     @Column(nullable = true)
-    private double offerDeadline;
+    private Date offerDeadline;
 
     @ManyToOne
     private User offeror;
@@ -26,12 +27,24 @@ public class Offer {
     @ManyToOne
     private Request request;
 
-    public Offer(boolean cancelled, double offerPrice, double offerDeadline, User offeror, Request request) {
+    public Offer(boolean cancelled, double offerPrice, Date offerDeadline, User offeror, Request request) {
         this.cancelled = cancelled;
         this.offerPrice = offerPrice;
         this.offerDeadline = offerDeadline;
         this.offeror = offeror;
         this.request = request;
+    }
+
+    @Override
+    public String toString() {
+        return "Offer{" +
+                "id=" + id +
+                ", cancelled=" + cancelled +
+                ", offerPrice=" + offerPrice +
+                ", offerDeadline=" + offerDeadline +
+                ", offeror=" + offeror.getUsername() +
+                ", request=" + request.getId() +
+                '}';
     }
 
     public Offer() {
@@ -77,11 +90,11 @@ public class Offer {
         this.offerPrice = offerPrice;
     }
 
-    public double getOfferDeadline() {
+    public Date getOfferDeadline() {
         return offerDeadline;
     }
 
-    public void setOfferDeadline(double offerDeadline) {
+    public void setOfferDeadline(Date offerDeadline) {
         this.offerDeadline = offerDeadline;
     }
 }

@@ -24,5 +24,11 @@ public class ClientController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @RequestMapping(value = "{taskId}/extend-deadline-confirmation", method = RequestMethod.POST)
+    public ResponseEntity extendDeadlineConfirmation(@PathVariable String taskId, @RequestBody Map<String,String> params){
+        System.out.println("\t\t\tExtend application deadline confirmation (user task)");
 
+        formService.submitTaskFormData(taskId,params);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

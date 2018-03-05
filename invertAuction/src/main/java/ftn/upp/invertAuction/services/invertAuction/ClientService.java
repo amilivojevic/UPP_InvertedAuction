@@ -47,5 +47,14 @@ public class ClientService {
 
     public void notEnoughOffersNotification(DelegateExecution execution){
         System.out.println("\t\t\tNot enough offers notification...");
+
+        String procInstId = execution.getProcessInstanceId();
+        String clientUsername = runtimeService.getVariable(procInstId,"client", String.class);
+        User client = userService.findByUsername(clientUsername);
+        String subject = "Not enough offers for your invert auction request " + procInstId + " you have created";
+        String text = "Hello, "+clientUsername + "!\n"
+                + "Sorry, there are not enough offers for your invert auction. You have received notification in inbox." +
+                " Please confirm there if you want to continue with a smaller number of offers.";
+        emailService.sendMail(client.getEmail(),subject, text);
     }
 }

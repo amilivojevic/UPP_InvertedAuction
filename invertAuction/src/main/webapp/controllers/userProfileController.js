@@ -74,14 +74,14 @@ invertAuctionApp.controller('userProfileController', function($scope, $http,$win
                 });
             }
 
-            //console.log("$scope.props: " + JSON.stringify($scope.props));
+            console.log("$scope.props: " + JSON.stringify($scope.props));
         }, function () {
             console.log("Failed to retrieve properties for: " + t.id);
         })
     }
 
     $scope.submitTaskProps = function () {
-        //console.log("propVals = " + JSON.stringify($scope.propVals));
+        console.log("propVals = " + JSON.stringify($scope.propVals));
         var taskName = $scope.userTasks[$scope.index].name;
         var taskId = $scope.userTasks[$scope.index].id;
         console.log("TaskId = " + taskId);
@@ -90,10 +90,27 @@ invertAuctionApp.controller('userProfileController', function($scope, $http,$win
         var propValue;
         for (i = 0; i < $scope.propVals.length; i++) {
             propId = $scope.propVals[i].id.toString();
-            propValue = $scope.propVals[i].value.toString();
+
+            if(propId == 'offerRank'){
+                propValue = $scope.props[i].value.toString();
+            }
+            else{
+                propValue = $scope.propVals[i].value.toString();
+            }
+
             map[propId] = propValue;
         }
         console.log("Props: " + JSON.stringify(map));
+
+/*
+        $http.post("/api/activiti/" + taskId, map).then(function () {
+            console.log("Data submitted successful!");
+            $window.location.reload();
+        },function () {
+            console.log("Data submit failed");
+        });
+
+*/
 
 
         switch(taskName){
@@ -115,9 +132,35 @@ invertAuctionApp.controller('userProfileController', function($scope, $http,$win
                 });
                 break;
             }
-
-
+            case "Candidate make an offer":{
+                $http.post("/api/candidate/" + taskId + "/candidate-make-an-offer", map).then(function () {
+                    console.log("candidateMakeAnOffer successful!");
+                    $window.location.reload();
+                },function () {
+                    console.log("offerConfirmation failed");
+                });
+                break;
+            }
+            case "View ranging and edit offer":{
+                $http.post("/api/candidate/" + taskId + "/view-rank-and-update", map).then(function () {
+                    console.log("view rank and update successful!");
+                    $window.location.reload();
+                },function () {
+                    console.log("offerConfirmation failed");
+                });
+                break;
+            }
+            case "Extend deadline confirmation":{
+                $http.post("/api/client/" + taskId + "/extend-deadline-confirmation", map).then(function () {
+                    console.log("view rank and update successful!");
+                    $window.location.reload();
+                },function () {
+                    console.log("offerConfirmation failed");
+                });
+                break;
+            }
         }
+
 
     }
 

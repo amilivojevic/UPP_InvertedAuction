@@ -56,7 +56,7 @@
       <sequenceFlow id="flow22" sourceRef="servicetask5" targetRef="usertask3"></sequenceFlow>
       <exclusiveGateway id="exclusivegateway5" name="Exclusive Gateway"></exclusiveGateway>
       <sequenceFlow id="flow23" sourceRef="usertask3" targetRef="exclusivegateway5"></sequenceFlow>
-      <userTask id="usertask4" name="Candidate make an offer">
+      <userTask id="usertask4" name="Candidate make an offer" activiti:assignee="${candidate.agent.username}">
         <extensionElements>
           <activiti:formProperty id="offerPrice" name="Offer price" type="double"></activiti:formProperty>
           <activiti:formProperty id="offerJobDeadline" name="Offer job deadline"></activiti:formProperty>
@@ -68,28 +68,29 @@
       <sequenceFlow id="flow25" name="not confirmed" sourceRef="exclusivegateway5" targetRef="servicetask6">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${candidateConfirmRequest == "false"}]]></conditionExpression>
       </sequenceFlow>
-      <serviceTask id="servicetask6" name="Save canceled offer" activiti:expression="${offerService.saveCanceledOffer(execution)}"></serviceTask>
+      <serviceTask id="servicetask6" name="Save canceled offer" activiti:expression="${candidateCompaniesService.saveCanceledOffer(execution, candidate)}"></serviceTask>
       <endEvent id="endevent5" name="End"></endEvent>
       <sequenceFlow id="flow26" sourceRef="servicetask6" targetRef="endevent5"></sequenceFlow>
       <sequenceFlow id="flow27" sourceRef="usertask4" targetRef="servicetask7"></sequenceFlow>
-      <serviceTask id="servicetask7" name="Get list of submitted offers" activiti:expression="${candidateCompaniesService.getSubmittedOffers(execution)}"></serviceTask>
+      <serviceTask id="servicetask7" name="Get list of submitted offers" activiti:expression="${candidateCompaniesService.getSubmittedOffers(execution, candidate)}"></serviceTask>
       <userTask id="usertask5" name="View ranging and edit offer" activiti:assignee="${candidate.agent.username}">
         <extensionElements>
-          <activiti:formProperty id="offerRank" type="long" writable="false"></activiti:formProperty>
-          <activiti:formProperty id="offerPrice" type="double"></activiti:formProperty>
-          <activiti:formProperty id="offerJobDeadline"></activiti:formProperty>
+          <activiti:formProperty id="offerRank" name="Your offer is currently ranked by: " type="long"></activiti:formProperty>
+          <activiti:formProperty id="offerEdited" name="Do you want to edit your offer?" type="boolean"></activiti:formProperty>
         </extensionElements>
       </userTask>
       <sequenceFlow id="flow28" sourceRef="servicetask7" targetRef="usertask5"></sequenceFlow>
       <exclusiveGateway id="exclusivegateway6" name="Exclusive Gateway"></exclusiveGateway>
       <sequenceFlow id="flow29" sourceRef="usertask5" targetRef="exclusivegateway6"></sequenceFlow>
-      <sequenceFlow id="flow30" name="offer edited" sourceRef="exclusivegateway6" targetRef="usertask4" skipExpression="${offereEdited == true}"></sequenceFlow>
-      <userTask id="usertask6" name="User Task"></userTask>
-      <sequenceFlow id="flow31" name="offer wasnt edited" sourceRef="exclusivegateway6" targetRef="usertask6">
-        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${offereEdited == true}]]></conditionExpression>
+      <sequenceFlow id="flow30" name="candidate wants to edit offer" sourceRef="exclusivegateway6" targetRef="usertask4">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${offerEdited == true}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flow31" name="candidate doesnt want to edit offer" sourceRef="exclusivegateway6" targetRef="servicetask11">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${offerEdited == false}]]></conditionExpression>
       </sequenceFlow>
       <endEvent id="endevent6" name="End"></endEvent>
-      <sequenceFlow id="flow32" sourceRef="usertask6" targetRef="endevent6"></sequenceFlow>
+      <sequenceFlow id="flow32" sourceRef="servicetask11" targetRef="endevent6"></sequenceFlow>
+      <serviceTask id="servicetask11" name="Save offer" activiti:expression="${candidateCompaniesService.saveOffer(execution, candidate)}"></serviceTask>
     </subProcess>
     <sequenceFlow id="flow21" sourceRef="exclusivegateway4" targetRef="subprocess1"></sequenceFlow>
     <sequenceFlow id="flow33" sourceRef="subprocess1" targetRef="servicetask8"></sequenceFlow>
@@ -114,29 +115,31 @@
     <serviceTask id="servicetask10" name="Notify client: not enough offers" activiti:expression="${clientService.notEnoughOffersNotification(execution)}"></serviceTask>
     <exclusiveGateway id="exclusivegateway8" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow39" sourceRef="servicetask10" targetRef="exclusivegateway8"></sequenceFlow>
-    <userTask id="usertask7" name="Extend application deadline confirmation">
+    <userTask id="usertask7" name="Extend deadline confirmation" activiti:assignee="${client}">
       <extensionElements>
-        <activiti:formProperty id="extendDeadline" type="enum">
-          <activiti:value id="yes" name="yes"></activiti:value>
-          <activiti:value id="no" name="no"></activiti:value>
-        </activiti:formProperty>
+        <activiti:formProperty id="extendDeadline" name="Would you like to extend application deadline of your invert auction in case of gaining more offers?" type="boolean"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow40" name="less offers than expected" sourceRef="exclusivegateway8" targetRef="usertask7"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway9" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow41" sourceRef="usertask7" targetRef="exclusivegateway9"></sequenceFlow>
-    <userTask id="usertask8" name="Client extends applicaiton deadline"></userTask>
+    <userTask id="usertask8" name="Client extends applicaiton deadline" activiti:assignee="${client}">
+      <extensionElements>
+        <activiti:formProperty id="newApplicationDeadline" name="Input new application deadline for your invert auction:" variable="job_application_deadline"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
     <sequenceFlow id="flow42" name="client wants more offers" sourceRef="exclusivegateway9" targetRef="usertask8">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${extendDeadline== "yes"}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow43" name="no offers at all" sourceRef="exclusivegateway8" targetRef="usertask8">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${offerList.size() == 0}]]></conditionExpression>
     </sequenceFlow>
-    <endEvent id="endevent8" name="End"></endEvent>
-    <sequenceFlow id="flow44" sourceRef="usertask8" targetRef="endevent8"></sequenceFlow>
     <sequenceFlow id="flow45" name="continue with less then expected number of offers" sourceRef="exclusivegateway9" targetRef="servicetask9">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${extendDeadline== "no"}]]></conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="flow46" sourceRef="usertask8" targetRef="servicetask12"></sequenceFlow>
+    <serviceTask id="servicetask12" name="New List of candidates" activiti:expression="${candidateCompaniesService.createNewList(execution)}"></serviceTask>
+    <sequenceFlow id="flow47" sourceRef="servicetask12" targetRef="subprocess1"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_invertAuction">
     <bpmndi:BPMNPlane bpmnElement="invertAuction" id="BPMNPlane_invertAuction">
@@ -203,11 +206,11 @@
       <bpmndi:BPMNShape bpmnElement="exclusivegateway6" id="BPMNShape_exclusivegateway6">
         <omgdc:Bounds height="40.0" width="40.0" x="1292.0" y="155.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="usertask6" id="BPMNShape_usertask6">
-        <omgdc:Bounds height="55.0" width="105.0" x="1260.0" y="246.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endevent6" id="BPMNShape_endevent6">
         <omgdc:Bounds height="35.0" width="35.0" x="1295.0" y="329.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask11" id="BPMNShape_servicetask11">
+        <omgdc:Bounds height="55.0" width="105.0" x="1260.0" y="246.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="boundarytimer1" id="BPMNShape_boundarytimer1">
         <omgdc:Bounds height="30.0" width="30.0" x="694.0" y="362.0"></omgdc:Bounds>
@@ -239,8 +242,8 @@
       <bpmndi:BPMNShape bpmnElement="usertask8" id="BPMNShape_usertask8">
         <omgdc:Bounds height="81.0" width="105.0" x="1036.0" y="920.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="endevent8" id="BPMNShape_endevent8">
-        <omgdc:Bounds height="35.0" width="35.0" x="1071.0" y="1070.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="servicetask12" id="BPMNShape_servicetask12">
+        <omgdc:Bounds height="71.0" width="105.0" x="1036.0" y="1050.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
         <omgdi:waypoint x="41.0" y="218.0"></omgdi:waypoint>
@@ -346,14 +349,14 @@
         <omgdi:waypoint x="1032.0" y="174.0"></omgdi:waypoint>
         <omgdi:waypoint x="1032.0" y="126.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="1121.0" y="182.0"></omgdc:Bounds>
+          <omgdc:Bounds height="48.0" width="100.0" x="1104.0" y="167.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow31" id="BPMNEdge_flow31">
         <omgdi:waypoint x="1312.0" y="195.0"></omgdi:waypoint>
         <omgdi:waypoint x="1312.0" y="246.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="48.0" width="100.0" x="1300.0" y="207.0"></omgdc:Bounds>
+          <omgdc:Bounds height="64.0" width="100.0" x="1300.0" y="207.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32">
@@ -426,10 +429,6 @@
           <omgdc:Bounds height="16.0" width="100.0" x="1107.0" y="632.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow44" id="BPMNEdge_flow44">
-        <omgdi:waypoint x="1088.0" y="1001.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1088.0" y="1070.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow45" id="BPMNEdge_flow45">
         <omgdi:waypoint x="1068.0" y="860.0"></omgdi:waypoint>
         <omgdi:waypoint x="775.0" y="860.0"></omgdi:waypoint>
@@ -437,6 +436,16 @@
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="80.0" width="100.0" x="861.0" y="790.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow46" id="BPMNEdge_flow46">
+        <omgdi:waypoint x="1088.0" y="1001.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1088.0" y="1050.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow47" id="BPMNEdge_flow47">
+        <omgdi:waypoint x="1141.0" y="1085.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1353.0" y="1085.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1353.0" y="375.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1431.0" y="213.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

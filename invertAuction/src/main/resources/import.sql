@@ -17,6 +17,9 @@ INSERT INTO `user`(`password`,`username`,`authority_id`,`name`,`email`,`address`
 --password: admin
 --usernmae: agent3
 INSERT INTO `user`(`password`,`username`,`authority_id`,`name`,`email`,`address`)VALUES("$2a$10$2nUwyYdXRxhKio6aVrwsVOXlUqSs9XnsIndPiyT.3AphhvZ/UYBta","agent3",2,"zoran zoranovic","inverttauctionnagent@gmail.com","zokijeva adresa");
+--password: admin
+--usernmae: agent4
+INSERT INTO `user`(`password`,`username`,`authority_id`,`name`,`email`,`address`)VALUES("$2a$10$2nUwyYdXRxhKio6aVrwsVOXlUqSs9XnsIndPiyT.3AphhvZ/UYBta","agent4",2,"milan milanic","inverttauctionnagent@gmail.com","zokijeva adresa");
 
 --password: admin
 --usernmae: indi
@@ -47,3 +50,8 @@ INSERT INTO `company_job_categories` (`company_id`, `job_categories_id`) VALUES 
 
 --selling
 INSERT INTO `company_job_categories` (`company_id`, `job_categories_id`) VALUES ('3', '4');
+
+
+--comp4
+INSERT INTO `company` (`id`, `address`, `distance`, `email`, `name`, `agent_id`) VALUES ('4', 'address', '10', 'emai4', 'comp4', '4');
+INSERT INTO `company_job_categories` (`company_id`, `job_categories_id`) VALUES ('4', '4');

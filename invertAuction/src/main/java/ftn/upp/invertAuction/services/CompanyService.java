@@ -42,4 +42,15 @@ public class CompanyService {
         return true;
     }
 
+    public boolean ifCompanyInList(Company company, List<Company> listOfCompany){
+
+        for(Company c : listOfCompany){
+            if(company.getId() == c.getId()){
+                return true;
+            }
+        }
+        return false;
+
+    }
+
 }

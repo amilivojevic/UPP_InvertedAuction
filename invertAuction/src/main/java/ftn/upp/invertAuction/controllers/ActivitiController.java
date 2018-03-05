@@ -10,13 +10,11 @@ import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/activiti")
@@ -55,4 +53,13 @@ public class ActivitiController {
 
         return new ResponseEntity<List<FormProperty>>(result,HttpStatus.OK);
     }
+
+    @RequestMapping("/{taskId}")
+    public ResponseEntity submitTaskFormData(@PathVariable String taskId, @RequestBody Map<String,String> params){
+        System.out.println("\t\t\tData submitting... (user task)");
+
+        formService.submitTaskFormData(taskId,params);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 }

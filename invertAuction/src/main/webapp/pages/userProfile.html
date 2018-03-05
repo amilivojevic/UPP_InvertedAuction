@@ -8,7 +8,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                <li><a href="#/login" ng-click="logout()"><i class="fa fa-sign-out"></i> Logout</a></li>
+                <li><a href="#/" ng-click="logout()"><i class="fa fa-sign-out"></i> Logout</a></li>
                 <li><a href="#/userProfile"><i class="fa fa-user"></i> {{loggedUser.username}}</a></li>
             </ul>
         </div>
@@ -141,17 +141,35 @@
         <div class="panel-body">
             <ng-form name="setTaskProps">
                 <div ng-repeat="prop in props track by $index">
-                    {{prop.name}}
-                    &nbsp;
-                    <div ng-show="prop.type.name == 'boolean'">
-                        <label><input type="radio" ng-model="propVals[$index].value" ng-value="true" name="optradio" >Yes</label>
-                        <label><input type="radio" ng-model="propVals[$index].value" ng-value="false" name="optradio">No</label>
-                    </div>
-                    <div ng-show="prop.type.name == 'string'" >
-                        <input name="textinput"  type="text" class="form-control input-md" ng-required="prop.type.name == 'string'">
-                    </div>
-                    <div ng-show="prop.type.name == 'long'" >
-                        <input name="textinput" type="text" class="form-control input-md" ng-required="prop.type.name == 'long'">
+                    <div class="form-group">
+                        {{prop.name}}
+                        &nbsp;
+                        <div ng-show="prop.type.name == 'boolean'">
+                            <label><input type="radio" ng-model="propVals[$index].value" ng-value="true" name="optradio" >Yes</label>
+                            <label><input type="radio" ng-model="propVals[$index].value" ng-value="false" name="optradio">No</label>
+                        </div>
+
+                        <div class="input-group" ng-show="prop.id == 'offerRank'">
+                            <input name="textinput" ng-value="props[$index].value" type="text" disabled class="form-control input-md" >
+                        </div>
+
+                        <div  ng-show="prop.type.name == null || prop.type.name == 'double' || prop.type.name == 'long'" >
+                            <div ng-show="prop.id != 'offerRank'">
+                                <div class="input-group" ng-show="prop.name.substring(prop.name.length-5).toLowerCase() == 'price'">
+                                    <input name="textinput" ng-model="propVals[$index].value" type="text" class="form-control input-md" >
+                                    <!--IF PRICE-->
+                                    <span class="input-group-addon" >$</span>
+                                </div>
+
+                                <div class="input-group" ng-show="prop.name.substring(prop.name.length-8).toLowerCase() == 'deadline'">
+                                    <input name="textinput" ng-model="propVals[$index].value" type="date" class="form-control input-md" >
+                                </div>
+
+                                <div class="input-group" ng-show="prop.name.substring(prop.name.length-8).toLowerCase() != 'deadline' && prop.name.substring(prop.name.length-5).toLowerCase() != 'price'">
+                                    <input name="textinput" ng-model="propVals[$index].value" type="text" class="form-control input-md">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
